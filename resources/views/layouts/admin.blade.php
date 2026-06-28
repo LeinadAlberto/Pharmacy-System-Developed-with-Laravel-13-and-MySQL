@@ -67,10 +67,17 @@
                         <ul class="menu">
                             <li class="sidebar-title">Menu</li>
 
-                            <li class="sidebar-item active">
+                            <li class="sidebar-item {{ request()->routeIs('admin.index') ? 'active' : '' }}">
                                 <a href="{{ route('admin.index') }}" class='sidebar-link'>
                                     <i class="bi bi-grid-fill"></i>
                                     <span>Panel de Control</span>
+                                </a>
+                            </li>
+
+                            <li class="sidebar-item {{ request()->routeIs('admin.ajustes.*') ? 'active' : '' }}">
+                                <a href="{{ route('admin.ajustes.index') }}" class='sidebar-link'>
+                                    <i class="bi bi-gear-fill"></i>
+                                    <span>Ajustes</span>
                                 </a>
                             </li>
 

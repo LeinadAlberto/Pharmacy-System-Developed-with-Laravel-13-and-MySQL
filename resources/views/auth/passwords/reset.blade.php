@@ -1,24 +1,118 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
-<div class="container-fluid min-vh-100 d-flex align-items-center py-5">
-    <div class="row justify-content-center w-100">
-        <div class="col-xl-8 col-lg-10">
-            <div class="row g-0 shadow-lg rounded overflow-hidden">
-                <div class="col-md-5 d-none d-md-flex bg-primary text-white flex-column justify-content-center p-5">
-                    <div class="mb-4">
-                        <h1 class="display-6 fw-bold">Nueva contraseña</h1>
-                        <p class="text-white-75">Introduce una nueva contraseña segura para completar el restablecimiento de tu cuenta.</p>
-                    </div>
-                    <div>
-                        <p class="mb-2"><strong>Protege tu acceso</strong></p>
-                        <p class="small text-white-75">Asegúrate de escoger una contraseña fuerte y no compartirla con nadie.</p>
-                    </div>
-                </div>
-                <div class="col-md-7 bg-white p-5">
-                    <div class="text-center mb-4">
-                        <h2 class="fw-bold">{{ __('Reset Password') }}</h2>
-                        <p class="text-muted">Completa los campos para actualizar tu contraseña.</p>
+        <style>
+        html,
+        body,
+        #app,
+        #main {
+            min-height: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            overflow-y: hidden;
+        }
+
+        #sidebar,
+        #main header {
+            display: none !important;
+        }
+
+        .page-content,
+        .container-fluid,
+        .row.g-0.min-vh-100,
+        .login-right {
+            min-height: 100vh;
+            height: 100vh;
+        }
+
+        .page-content {
+            padding: 0 !important;
+        }
+
+        body {
+            background: #f4f9ff;
+        }
+
+        .login-right {
+            background: linear-gradient(135deg, #4353ff 0%, #5c68ff 45%, #7b88ff 100%);
+            position: relative;
+            overflow: hidden;
+            box-sizing: border-box;
+            padding: 0 2rem;
+        }
+
+        .login-right::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            opacity: 0.15;
+            background-image: radial-gradient(circle at top right, rgba(255,255,255,0.35) 0%, transparent 40%),
+                radial-gradient(circle at bottom left, rgba(255,255,255,0.2) 0%, transparent 35%);
+        }
+
+        .login-panel {
+            max-width: 100%;
+            width: 100%;
+            padding: 0 2rem;
+        }
+        @media (min-width: 768px) {
+            .auth-left-col {
+                flex: 0 0 35%;
+                max-width: 35%;
+            }
+
+            .auth-right-col {
+                flex: 0 0 65%;
+                max-width: 65%;
+            }
+        }
+
+        .mazer-logo {
+            width: 48px;
+            height: 48px;
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+        }
+
+        .mazer-logo-head,
+        .mazer-logo-body {
+            display: block;
+            background-color: #3752ff;
+            border-radius: 999px;
+        }
+
+        .mazer-logo-head {
+            width: 14px;
+            height: 14px;
+            background-color: #6ea7ff;
+        }
+
+        .mazer-logo-body {
+            width: 22px;
+            height: 10px;
+        }
+    </style>
+
+    <div class="container-fluid px-0">
+        <div class="row g-0 min-vh-100">
+            <div class="col-12 col-md-6 auth-left-col d-flex align-items-center justify-content-center py-0 py-md-5">
+                <div class="login-panel w-100 px-4 px-sm-5">
+                    <div class="mb-5">
+                        <a href="{{ url('/') }}" class="text-decoration-none d-inline-flex align-items-center gap-2 mb-4">
+                            <span class="mazer-logo">
+                                <span class="mazer-logo-head"></span>
+                                <span class="mazer-logo-body"></span>
+                            </span>
+                            <span class="h5 mb-0 fw-semibold" style="color:#3752ff;">Mazer</span>
+                        </a>
+
+                        <h1 class="display-5 fw-bold mb-3">Create a new password</h1>
+                        <p class="text-muted">Set a strong password to complete the reset.</p>
                     </div>
 
                     <form method="POST" action="{{ route('password.update') }}">
@@ -27,25 +121,25 @@
                         <input type="hidden" name="token" value="{{ $token }}">
 
                         <div class="mb-3">
-                            <label for="email" class="form-label">{{ __('Email Address') }}</label>
+                            <label for="email" class="form-label text-muted">{{ __('Email Address') }}</label>
                             <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $email ?? old('email') }}" required autocomplete="email" autofocus>
 
                             @error('email')
-                                <div class="invalid-feedback">{{ $message }}</div>
+                                <div class="invalid-feedback d-block">{{ $message }}</div>
                             @enderror
                         </div>
 
                         <div class="mb-3">
-                            <label for="password" class="form-label">{{ __('Password') }}</label>
+                            <label for="password" class="form-label text-muted">{{ __('Password') }}</label>
                             <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
 
                             @error('password')
-                                <div class="invalid-feedback">{{ $message }}</div>
+                                <div class="invalid-feedback d-block">{{ $message }}</div>
                             @enderror
                         </div>
 
                         <div class="mb-4">
-                            <label for="password-confirm" class="form-label">{{ __('Confirm Password') }}</label>
+                            <label for="password-confirm" class="form-label text-muted">{{ __('Confirm Password') }}</label>
                             <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
                         </div>
 
@@ -54,12 +148,15 @@
                         </div>
                     </form>
 
-                    <div class="text-center mt-3">
-                        <p class="text-muted small mb-0">¿Ya recuerda su contraseña? <a href="{{ route('login') }}">{{ __('Login') }}</a></p>
+                    <div class="text-center">
+                        <span class="text-muted">Remembered your password?</span>
+                        <a href="{{ route('login') }}" class="text-primary fw-semibold">Log in.</a>
                     </div>
                 </div>
             </div>
+
+            <div class="col-md-6 d-none d-md-flex auth-right-col login-right"></div>
         </div>
     </div>
-</div>
 @endsection
+
